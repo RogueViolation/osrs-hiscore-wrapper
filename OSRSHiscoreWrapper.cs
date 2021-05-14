@@ -1,21 +1,22 @@
-﻿using HtmlAgilityPack;
+﻿using System.Net.Http;
 using System;
 
 namespace osrs_hiscore_wrapper
 {
     public class OSRSHiscoreWrapper
     {
+        public readonly HttpClient _client;
         public OSRSHiscoreWrapper()
         {
-
+            _client = new HttpClient();
         }
         public string GetStats(string username, string mode)
         {
-            var scraper = new HtmlWeb();
             var uri = BuildUri(username, mode);
-            var html = scraper.Load(uri.ToString());
+            var result = _client.GetAsync(uri.ToString()).GetAwaiter().GetResult();
+            var statsString = result.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
-            return html.Text;
+            return statsString;
         }
 
         public Uri BuildUri(string username, string mode)
