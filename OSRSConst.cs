@@ -66,7 +66,7 @@ namespace osrs_hiscore_wrapper
         public static string Master => "master";
     }
 
-    public static class OSRSBoss
+    public static class OSRSBosses
     {
          public static string AbyssalSire => "abyssalSire";  
          public static string AlchemicalHydra => "alchemicalHydra";  
