@@ -173,7 +173,9 @@ namespace osrs_hiscore_wrapper
             "eliteClues",
             "masterClues",
             "lastManStanding",
-            "soulWarsZeal"
+            "pvpArena",
+            "soulWarsZeal",
+            "riftsClosed"
         };
 
         public static readonly string[] OSRSBosses =
@@ -205,7 +207,9 @@ namespace osrs_hiscore_wrapper
             "kreeArra",
             "krilTsutsaroth",
             "mimic",
+            "nex",
             "nightmare",
+            "phosaniNightmare",
             "obor",
             "sarachnis",
             "scorpia",
@@ -214,6 +218,7 @@ namespace osrs_hiscore_wrapper
             "gauntlet",
             "corruptedGauntlet",
             "theatreOfBlood",
+            "theatreOfBloodHard",
             "thermonuclearSmokeDevil",
             "tzKalZuk",
             "tzTokJad",
