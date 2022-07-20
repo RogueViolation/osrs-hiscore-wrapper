@@ -9,10 +9,13 @@ namespace osrs_hiscore_wrapper
     public class OSRSHiscoreWrapper
     {
         public readonly IDataAccess _dataAccess;
-        //public readonly IConfigurationReader _configurationReader;
+        public readonly int _skillCount = 24;
+        public readonly int _activityCount = 14;
+        public OSRSStats _stats;
         public OSRSHiscoreWrapper()
         {
             _dataAccess = new DataAccess();
+            _stats = new OSRSStats();
         }
         public string GetStats(string username, string mode)
         {
@@ -24,29 +27,18 @@ namespace osrs_hiscore_wrapper
             var stats = new OSRSStats();
             var parsedCsv = csv.Split('\n').ToList();
             parsedCsv.RemoveAt(parsedCsv.Count - 1);
-            for (int i = 0; i <= 23; i++)
-            {
-                stats.Levels.Add(new OSRSLevel().ToOSRSLevel(OSRSConst.OSRSSkills[i], parsedCsv[i]));
-            }
-            for (int i = 0; i <= 13; i++)
-            {
-                stats.Activities.Add(new OSRSActivity().ToOSRSActivity(OSRSConst.OSRSActivities[i], parsedCsv[i + 24]));
-            }
-            for (int i = 0; i <= 47; i++)
-            {
-                stats.Bosses.Add(new OSRSBoss().ToOSRSBoss(OSRSConst.OSRSBosses[i], parsedCsv[i + 24 + 13]));
-            }
-
-            return new OSRSStats();
+            AddHiscoreItemsToList(OSRSConst.OSRSSkills, parsedCsv.Take(_skillCount).ToList());
+            AddHiscoreItemsToList(OSRSConst.OSRSActivities, parsedCsv.Skip(_skillCount).Take(_activityCount).ToList());
+            AddHiscoreItemsToList(OSRSConst.OSRSBosses, parsedCsv.Skip(_skillCount + _activityCount).ToList());
+            var bossCsv = parsedCsv.Skip(_skillCount + _activityCount);
+            return _stats;
         }
-    }
-    public static class WrapperHelpers
-    {
-        public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
+
+        public void AddHiscoreItemsToList(string[] section, IList<string> items)
         {
-            foreach (T element in source)
+            for (int i = 0; i < items.Count; i++)
             {
-                action(element);
+                _stats.Stats.Add(section[i], new OSRSStat().ToOSRSStat(items[i]));
             }
         }
     }
