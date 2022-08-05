@@ -17,12 +17,31 @@ namespace osrs_hiscore_wrapper
             _dataAccess = new DataAccess();
             _stats = new OSRSStats();
         }
-        public string GetStats(string username, string mode)
+        /// <summary>
+        /// Gets given player's OSRS Stats.
+        /// </summary>
+        /// <param name="username">Player's username</param>
+        /// <param name="mode">Takes player's gamemode.
+        /// "main" - for regular;
+        /// "ironman" - for ironmen;
+        /// "ultimate" = for ultimate ironmen;
+        /// "hardcore" - for hardcore ironmen;
+        /// "deadman" - for deadmanmode;
+        /// "seasonal" - for seasonal modes;
+        /// "tournament" - for tournament modes.</param>
+        /// <returns>Returns a dictionary for each hiscore entry. Key being the skill/activity and the value being the experience/level(kc)/rank</returns>
+        public OSRSStats GetOSRSStatsForUser(string username, string mode)
+        {
+            return ParseStats(GetStats(username, mode));
+
+        }
+
+        private string GetStats(string username, string mode)
         {
             return _dataAccess.GetOSRSStatStringData(username, mode);
         }
 
-        public OSRSStats ParseStats(string csv)
+        private OSRSStats ParseStats(string csv)
         {
             var stats = new OSRSStats();
             var parsedCsv = csv.Split('\n').ToList();
@@ -34,7 +53,7 @@ namespace osrs_hiscore_wrapper
             return _stats;
         }
 
-        public void AddHiscoreItemsToList(string[] section, IList<string> items)
+        private void AddHiscoreItemsToList(string[] section, IList<string> items)
         {
             for (int i = 0; i < items.Count; i++)
             {
