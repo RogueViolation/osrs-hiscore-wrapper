@@ -108,6 +108,8 @@ namespace osrs_hiscore_wrapper
             "theatreOfBlood",
             "theatreOfBloodHard",
             "thermonuclearSmokeDevil",
+            //"tombsOfAmascut",
+            //"tombsOfAmascutExpertMode",
             "tzKalZuk",
             "tzTokJad",
             "venenatis",
